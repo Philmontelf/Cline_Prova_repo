@@ -3,36 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina con Bottone</title>
+    <title>Interruttore Toggle</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             background-color: #f0f0f0;
         }
-        button {
-            padding: 12px 24px;
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .toggle-container label {
             font-size: 16px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
+            color: #333;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
             cursor: pointer;
-            transition: background-color 0.3s;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 34px;
         }
-        button:hover {
-            background-color: #0056b3;
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
         }
-        button:active {
-            background-color: #003d80;
+
+        input:checked + .slider {
+            background-color: #007bff;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #007bff;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        #stato {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
         }
     </style>
 </head>
 <body>
-    <button type="button">Cliccami!</button>
+    <div class="toggle-container">
+        <label for="interruttore">Interruttore:</label>
+        <label class="switch">
+            <input type="checkbox" id="interruttore">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <div id="stato">Spento</div>
+
+    <script>
+        const checkbox = document.getElementById('interruttore');
+        const stato = document.getElementById('stato');
+
+        checkbox.addEventListener('change', function () {
+            if (this.checked) {
+                stato.textContent = 'Acceso';
+                stato.style.color = '#007bff';
+            } else {
+                stato.textContent = 'Spento';
+                stato.style.color = '#333';
+            }
+        });
+    </script>
 </body>
 </html>
